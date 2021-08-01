@@ -9,12 +9,14 @@ class CarModelInline(admin.StackedInline):
    model = CarModel
 # CarModelAdmin class
 
+class CarModelAdmin(admin.ModelAdmin):
+   model = CarModel
 
 # CarMakeAdmin class with CarModelInline
 class CarMakeAdmin(admin.ModelAdmin):
     model = CarMake
-    inline = [CarModelInline]
+    inlines = [CarModelInline]
 
 # Register models here
 admin.site.register(CarMake,CarMakeAdmin)
-admin.site.register(CarModel)
+admin.site.register(CarModel,CarModelAdmin)
