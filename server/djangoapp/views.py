@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
-# from .restapis import related methods
+from .restapis import get_dealers_from_cf,get_dealer_reviews_from_cf, post_request
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -89,18 +89,35 @@ def registration_request(request):
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 def get_dealerships(request):
     context = {}
+
     if request.method == "GET":
-        return render(request, 'djangoapp/index.html', context)
-    else:
-        return render(request, 'djangoapp/index.html', context)
+        # Get dealers from the URL
+        dealerships = get_dealers_from_cf()
+        # Concat all dealer's short name
+        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        # Return a list of dealer short name
+        return HttpResponse(dealer_names)
 
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
-# def get_dealer_details(request, dealer_id):
-# ...
+def get_dealer_details(request, dealer_id):
+    context={}
+    if request.method == "GET":
+        dealer_reviews = get_dealer_reviews_from_cf(dealer_id)  
+        context["dealer_reviews"]=dealer_reviews
+        print("WATCHHHH ",dealer_reviews)
+        ab=' '.join([rev.review for rev in dealer_reviews])
+        return HttpResponse(ab)
+
 
 # Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
-
+def add_review(request, dealer_id):
+    if request.user.is_authenticated:
+        review = {"dealership": dealer_id, "review":"this is a review"}
+        json_payload=dict()
+        json_payload["review"] = review
+        url = 'https://9d9156f8.eu-gb.apigw.appdomain.cloud/api/review'
+        response = post_request(url, json_payload)
+        print(response)
+        return HttpResponse("Response status:")
