@@ -10,4 +10,4 @@
 import sys
 
 def main(dict):
-    return { 'message': 'Hello world' }
+    return { 'reviews': dict["docs"] }

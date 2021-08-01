@@ -10,4 +10,5 @@
 import sys
 
 def main(dict):
-    return { 'message': 'Hello world' }
+    return { 'doc': dict["review"], 'params':{'include_docs':'true'}}
+
