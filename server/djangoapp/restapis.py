@@ -93,7 +93,12 @@ def get_dealer_reviews_from_cf(dealerId):
             purchase = review["purchase"], review = review["review"], purchase_date = review["purchase_date"],
             car_make = review["car_make"], car_model = review["car_model"],car_year=review["car_year"],
             id = review["id"])
-            review_object.sentiment = analyze_review_sentiments(review_object.review)
+            
+            sentiment = analyze_review_sentiments(review_object.review)
+            if "error" in sentiment:
+                review_object.sentiment = "neutral"
+            else:
+                review_object.sentiment=sentiment["sentiment"]["document"]["label"]
             results.append(review_object)
     return results
 
