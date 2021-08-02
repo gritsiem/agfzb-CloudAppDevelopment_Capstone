@@ -58,7 +58,6 @@ def get_dealers_from_cf(**kwargs):
                                    short_name=dealer["short_name"], state=dealer["state"],
                                    st=dealer["st"], zip=dealer["zip"])
             results.append(dealer_obj)
-
     return results
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
@@ -67,6 +66,7 @@ def get_dealer_by_state_from_cf(url, state_code):
     # query = {'state':state_code}
     url = 'https://9d9156f8.eu-gb.apigw.appdomain.cloud/api/dealerships'
     json_response = get_request(url, state=state_code)
+
     results = []
 # - Parse JSON results into a DealerView object list
     if json_response:

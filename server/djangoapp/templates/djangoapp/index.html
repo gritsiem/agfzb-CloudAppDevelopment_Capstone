@@ -41,7 +41,7 @@
                                         <input type="text" class="form-control" placeholder="Username" name="username" >
                                         <input type="password" class="form-control" placeholder="Password" name="psw" >
                                         <button class="btn btn-primary" type="submit">Login</button>
-                                        <a class="btn btn-link" href="{% url djangoapp:register' %}">Sign Up</a>
+                                        <a class="btn btn-link" href="{% url 'djangoapp:register' %}">Sign Up</a>
                                     </div>
                                 </form>
                             </li>
@@ -50,6 +50,38 @@
             </div>
         </nav>
     <!--Add a dealer table here -->
+
+        <div class="container">
+            <table id="table" class="table table-dark" data-filter-control="true">
+                <thead>
+                    <tr>
+                        <th scope="col" data-field="id">ID</th>
+                        <th scope="col" data-field="dealer-name">Dealer Name</th>
+                        <th scope="col" data-field="city">City</th>
+                        <th scope="col" data-field="address">Address</th>
+                        <th scope="col" data-field="zip">Zip</th>
+                        <th scope="col" data-field="state" data-filter-control="select">State</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dealership in dealerships %}
+                        <tr>
+                            <th scope="row">{{dealership.id}}</th>
+                            <td>
+                                <a href="{% url 'djangoapp:dealer_details' dealership.id %}">
+                                    {{dealership.full_name}}
+                                </a>
+                            </td>
+                            <td>{{dealership.city}}</td>
+                            <td>{{dealership.address}}</td>
+                            <td>{{dealership.zip}}</td>
+                            <td>{{dealership.state}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+        </div>
+
         <footer class="fixed-bottom">
             <div class="container-fluid">
                 <div class="row mx-2">
@@ -64,5 +96,9 @@
             </div>
         </footer>
     </body>
-
+<script>
+  $(function() {
+    $('#table').bootstrapTable()
+  })
+</script>
 </html>

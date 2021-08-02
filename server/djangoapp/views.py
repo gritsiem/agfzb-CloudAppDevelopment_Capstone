@@ -12,7 +12,7 @@ import json
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
-
+dealers = get_dealers_from_cf()
 
 # Create your views here.
 
@@ -89,15 +89,13 @@ def registration_request(request):
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 def get_dealerships(request):
     context = {}
-
     if request.method == "GET":
         # Get dealers from the URL
-        dealerships = get_dealers_from_cf()
+        dealerships = dealers
         # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        context["dealerships"] = dealerships
         # Return a list of dealer short name
-        return HttpResponse(dealer_names)
-
+        return render(request, 'djangoapp/index.html', context)
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
@@ -105,10 +103,10 @@ def get_dealer_details(request, dealer_id):
     context={}
     if request.method == "GET":
         dealer_reviews = get_dealer_reviews_from_cf(dealer_id)  
+        context["dealer"] = next((x for x in dealers if x.id == dealer_id), None)
         context["dealer_reviews"]=dealer_reviews
-        print("WATCHHHH ",dealer_reviews)
-        ab=' '.join([rev.review for rev in dealer_reviews])
-        return HttpResponse(ab)
+        context["dealer_id"] = dealer_id
+        return render(request, 'djangoapp/dealer_details.html', context)
 
 
 # Create a `add_review` view to submit a review
