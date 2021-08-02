@@ -16,25 +16,38 @@
         <form class="form-register col-4 mx-auto my-5" action="{% url 'djangoapp:dealer_review' dealer_id %}" method="post">
               <h1 class="h3 mb-3 font-weight-normal">Share your feedback</h1>
               <div class="form-group">
-                <label for="fname" class="sr-only">First Name</label>
-                <input id="fname" name="fname" class="form-control" placeholder="First Name" required autofocus>
+                <label for="name" class="sr-only">Full Name</label>
+                <input id="name" name="name" class="form-control" placeholder="Full Name" required autofocus>
               </div>
               <div class="form-group">
-                <label for="lname" class="sr-only">Last Name</label>
-                <input id="lname" name="lname" class="form-control" placeholder="Last Name" required autofocus>
+                <label for="content" class="sr-only">Review</label>
+                <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
+            </div>
+              <div class="form-group">
+                <label for="purchasecheck" >Have you puchased a car from {{dealer}} </label>
+                <input class="form-check-input" type="checkbox" value="checked" name="purchasecheck" id="purchasecheck">
               </div>
               <div class="form-group">
-                <label for="username" class="sr-only" >Username</label>
-                <input id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-              </div>
-              <div class="form-group">
-                <label for="password" class="sr-only">Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
-              </div>
-              {% csrf_token %}
+                  <label for="car" >Which car did you buy?</label>
+                  <select name="car" id="car" class="form-select" required>
+                      {% for car in cars %}
+                      <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
+                      {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                  <label for="purchasedate" >Purchase Date: </label>
+                  <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate">
+                </div>
+                {% csrf_token %}
               <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
               <p class="mt-5 mb-3 text-muted">Please register and explore the best deals for you!</p>
             </form>
 
     </body>
+    <script type="text/javascript">
+      $('.date-own').datepicker({
+         format: 'mm/dd/yyyy'
+       });
+ </script>
 </html>
