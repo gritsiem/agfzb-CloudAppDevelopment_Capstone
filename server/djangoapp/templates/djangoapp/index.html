@@ -13,21 +13,21 @@
 
 </head>
 
-    <body>
+    <body class="pb-5">
     <!-- Remove this line the first time you edit this file -->
      
     <!--Add a nav bar here -->
         <nav class="navbar navbar-dark bg-dark">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Best Cars</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Best Cars</a>
                 </div>
                         <ul class="nav navbar-nav">
                             <li class="nav-item active">
                                 <a class="nav-link" href="{% url 'djangoapp:about' %}">About</a>
                             </li>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav ml-auto">
                             {% if user.is_authenticated %}
                             <li>
                                 <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
@@ -51,24 +51,30 @@
         </nav>
     <!--Add a dealer table here -->
 
-        <div class="container">
-            <table id="table" class="table table-dark" data-filter-control="true">
-                <thead>
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="display-2">Our Dealers</h2>
+                    <p class="lead text-success">Buy a car anywhere with dealerships all over the country</p>
+                </div>
+            </div>
+            <table id="table" class="table table-striped table-dark rounded-top" data-filter-control="true">
+                <thead class=>
                     <tr>
                         <th scope="col" data-field="id">ID</th>
                         <th scope="col" data-field="dealer-name">Dealer Name</th>
                         <th scope="col" data-field="city">City</th>
                         <th scope="col" data-field="address">Address</th>
                         <th scope="col" data-field="zip">Zip</th>
-                        <th scope="col" data-field="state" data-filter-control="select">State</th>
+                        <th scope="col" data-field="state" data-filter-control="select" class="px-2 pb-2">State</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for dealership in dealerships %}
                         <tr>
                             <th scope="row">{{dealership.id}}</th>
-                            <td>
-                                <a href="{% url 'djangoapp:dealer_details' dealership.id %}">
+                            <td >
+                                <a class="font-weight-bold text-decoration-none text-success" href="{% url 'djangoapp:dealer_details' dealership.id %}">
                                     {{dealership.full_name}}
                                 </a>
                             </td>
@@ -82,16 +88,15 @@
 
         </div>
 
-        <footer class="fixed-bottom">
-            <div class="container-fluid">
-                <div class="row mx-2">
-                    <ul class="list-inline">
-                        <li class="list-inline-item">
-                            <a href = "{% url 'djangoapp:contact' %}">
-                                Contact Us
+        <footer class="fixed-bottom footer mt-2 bg-white" >
+            <div class="container-fluid p-3" style="background: linear-gradient(45deg, lightgreen, transparent);">
+                <div class="row px-2 text-center">
+                    <span class="font-weight-bold col-12">
+                            <a href = "{% url 'djangoapp:contact' %}" class= "text-center text-success text-decoration-none">
+                                Contact Us 
                             </a>
-                        </li>
-                    </ul>
+                            <span class="mr-0">&#169; Best Cars 2021</span>
+                        </span>
                 </div>
             </div>
         </footer>

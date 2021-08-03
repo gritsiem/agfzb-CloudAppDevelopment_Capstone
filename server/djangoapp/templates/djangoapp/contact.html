@@ -17,17 +17,17 @@
     <!-- Remove this line the first time you edit this file -->
      
     <!--Add a nav bar here -->
-        <nav class="navbar navbar-dark bg-dark">
+         <nav class="navbar navbar-dark bg-dark">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Best Cars</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Best Cars</a>
                 </div>
                         <ul class="nav navbar-nav">
                             <li class="nav-item active">
                                 <a class="nav-link" href="{% url 'djangoapp:about' %}">About</a>
                             </li>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav ml-auto">
                             {% if user.is_authenticated %}
                             <li>
                                 <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
@@ -41,7 +41,7 @@
                                         <input type="text" class="form-control" placeholder="Username" name="username" >
                                         <input type="password" class="form-control" placeholder="Password" name="psw" >
                                         <button class="btn btn-primary" type="submit">Login</button>
-                                        <a class="btn btn-link" href="{% url djangoapp:register' %}">Sign Up</a>
+                                        <a class="btn btn-link" href="{% url 'djangoapp:register' %}">Sign Up</a>
                                     </div>
                                 </form>
                             </li>
@@ -51,36 +51,38 @@
         </nav>
     
     <section class="contact-content">
-        <div class = "container">
-
+        <div class="container mb-5">
             <div class="row">
-                <div class="col-12">
-                    <h1 class="text-center">Reach Out To Us</h1>
+                <div class="col-12 text-center mt-5">
+                    <h2 class="display-2">Reach out to us</h2>
                 </div>
             </div>
             <div class="row">
-                <div class="col-8">
-                    Adress
-                </div>
-            </div>
+                <div class="col-6 text-center mt-5">
+                    <h5 class="display-5">Address</h2>
+                        <p class="lead text-muted">26 Fake Country<br> St.Brooklyn, <br> NY 11236</p>
+                    </div>
+                    <div class="col-6 text-center mt-5">
+                        <h5 class="display-5">Phone</h2>
+                            <p class="lead text-muted">+1212-555-0331</p>
+                        </div>
+                    </div>
             <div class="row">
-                <div class="col-8">
-                    Phone
+                <div class="col-12 text-center mt-5 text-secondary">
+                    <p class="display-4 font-weight-light">We would love to hear from you.</p>
                 </div>
             </div>
         </div>
 
     </section>
-    <footer class="fixed-bottom">
-            <div class="container-fluid">
-                <div class="row mx-2">
-                    <ul class="list-inline">
-                        <li class="list-inline-item">
-                            <a href = "{% url 'djangoapp:contact' %}">
-                                Contact Us
-                            </a>
-                        </li>
-                    </ul>
+    <footer class="fixed-bottom footer" style="background: linear-gradient(45deg, lightgreen, transparent);">
+            <div class="container-fluid p-3">
+                <div class="row px-2 text-center">
+                    <span class="font-weight-bold col-12">
+                            <p href = "{% url 'djangoapp:contact' %}" class= "text-center text-success text-decoration-none">
+                                &#169; Best Cars 2021
+                            </p>
+                        </span>
                 </div>
             </div>
         </footer>
