@@ -103,7 +103,7 @@ def get_dealer_details(request, dealer_id):
     context={}
     if request.method == "GET":
         dealer_reviews = get_dealer_reviews_from_cf(dealer_id)  
-        context["dealer"] = next((x for x in dealers if x.id == dealer_id), None)
+        context["dealer"] = next((x.full_name for x in dealers if x.id == dealer_id), None)
         context["dealer_reviews"]=dealer_reviews
         context["dealer_id"] = dealer_id
         return render(request, 'djangoapp/dealer_details.html', context)
