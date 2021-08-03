@@ -1,8 +1,8 @@
 import requests
 import json
-from .models import CarDealer, DealerReview
+from .models import CarDealer, DealerReview, CarModel, CarMake
 from requests.auth import HTTPBasicAuth
-
+import datetime
 
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
@@ -93,7 +93,8 @@ def get_dealer_reviews_from_cf(dealerId):
             purchase = review["purchase"], review = review["review"], purchase_date = review["purchase_date"],
             car_make = review["car_make"], car_model = review["car_model"],car_year=review["car_year"],
             id = review["id"])
-            
+            carmake = CarMake.objects.get_or_create(name = review["car_make"], description = review["car_make"])[0]
+            car = CarModel.objects.create(dealerId=dealerId,name=review['car_model'],make=carmake, year=datetime.date(int(review["car_year"]),1,1), Type="Sedan")
             sentiment = analyze_review_sentiments(review_object.review)
             if "error" in sentiment:
                 review_object.sentiment = "neutral"
