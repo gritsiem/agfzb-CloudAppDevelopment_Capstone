@@ -70,6 +70,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% ifequal dealerships|length 0 %}
+                        <p class="text-center w-100 lead text-danger mt-5" style="font-size: 2em;">Trouble fetching dealers. Please try again later.</p>
+                    {% endifequal%}
+
                     {% for dealership in dealerships %}
                         <tr>
                             <th scope="row">{{dealership.id}}</th>

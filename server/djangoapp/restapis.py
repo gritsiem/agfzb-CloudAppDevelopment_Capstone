@@ -22,7 +22,11 @@ def get_request(url,**kwargs):
     except Error as val:
         # If any error occurs
         print("Network exception occurred", val)
+
+        
     status_code = response.status_code
+    if status_code!=200:
+        print("Server Error")
     print("With status {}".format(status_code))
     json_data = json.loads(response.text)
     return json_data
@@ -47,7 +51,7 @@ def get_dealers_from_cf(**kwargs):
     url = "https://9d9156f8.eu-gb.apigw.appdomain.cloud/api/dealerships"
     # Call get_request with a URL parameter
     json_result = get_request(url)
-    if json_result:
+    if "dealerships" in json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["dealerships"]
         # For each dealer object
@@ -86,7 +90,7 @@ def get_dealer_reviews_from_cf(dealerId):
     url = 'https://9d9156f8.eu-gb.apigw.appdomain.cloud/api/review'
     json_response = get_request(url,dealerId=dealerId)
     results = []
-    if json_response:
+    if "reviews" in json_response:
         reviews = json_response["reviews"]
         for review in reviews:
             review_object = DealerReview(dealership=review["dealership"],name = review["name"],
@@ -101,6 +105,8 @@ def get_dealer_reviews_from_cf(dealerId):
             else:
                 review_object.sentiment=sentiment["sentiment"]["document"]["label"]
             results.append(review_object)
+    else: 
+        return 500
     return results
 
         
