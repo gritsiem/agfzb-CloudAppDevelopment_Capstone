@@ -53,13 +53,13 @@
             </div>
         <br>
         
-        {% ifequal dealer_reviews|length 0 %}
-            <p class="text-center w-100 display-4 text-secondary mt-5" style="font-size: 3em;">No reviews yet</p>
-        {% endifequal%}
-        
+    
         {% ifequal dealer_reviews 500 %}
             <p class="text-center w-100 display-4 text-danger mt-5" style="font-size: 2em;">There has been a server error. Please try again later.</p>  
         {% else %}
+        {% ifequal dealer_reviews|length 0 %}
+            <p class="text-center w-100 display-4 text-secondary mt-5" style="font-size: 3em;">No reviews yet</p>
+        {% endifequal%}
         <div class="card-columns">
             {% for review in dealer_reviews %}
                 <div class="card p-2 border-secondary-2 " style="width: 18rem;">
