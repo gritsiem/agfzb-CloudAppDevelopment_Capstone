@@ -39,14 +39,18 @@ def login_request(request):
     context = {}
     if request.method == "POST":
         username = request.POST['username']
-        password = request.POST['psw']
+        password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect('djangoapp:index')
         else:
+            context["login"] = False
+            context["message"] = "No user with these credentials exists. Please Sign up."
+
             return render(request, 'djangoapp/registration.html', context)
     else:
+        context["login"] = True
         return render(request, 'djangoapp/registration.html', context)
 
 # Create a `logout_request` view to handle sign out request
@@ -136,3 +140,8 @@ def add_review(request, dealer_id):
             name = next((x for x in dealers if x.id == dealer_id), None)
             cars = CarModel.objects.filter(dealerId=dealer_id)
             return render(request,"djangoapp/add_review.html", context = {"dealer_id" : dealer_id, 'dealer':name, 'cars': cars})
+    else:
+        if request.method == "GET":
+            return render(request,"djangoapp/registration.html", context = {"login" : True})
+
+
